@@ -10,7 +10,7 @@ public class TwoSortings {
         final Random random = new Random();
 
         int arrSize = 10;
-        int[] arr = new int[] {1,2,1,2,1};
+        int[] arr = new int[] {1,1,1,2,1};
 /*
         int[] arr = new int[arrSize];
         for (int i = 0; i < arrSize; i++) {
@@ -54,7 +54,7 @@ public class TwoSortings {
     }
 
     static void sortChoice(int[] arr) {
-        for (int j = 0; j < arr.length/2 + 1; j++) {
+        for (int j = 0; j < arr.length - 1; j++) {
             int x = arr[j];
             int pos = -1;
             for (int i = j; i < arr.length; i++) {
