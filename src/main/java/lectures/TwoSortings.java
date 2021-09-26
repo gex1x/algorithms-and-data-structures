@@ -20,7 +20,9 @@ public class TwoSortings {
 
         output(arr);
 //        sortChoice(arr);
-        sortBubble1(arr);
+//        sortBubble1(arr);
+        sortInserts(arr);
+
         output(arr);
     }
 
@@ -33,7 +35,7 @@ public class TwoSortings {
     }
 
     static void sortBubble1(int[] arr) {
-        for (int j = 0; j < arr.length - 2; j++) {
+        for (int j = 0; j < arr.length - 1; j++) {
             for (int i = 0; i < arr.length - 1 - j; i++) {
                 if (arr[i] > arr[i + 1]) {
                     swap(arr, i, i + 1);
@@ -78,5 +80,59 @@ public class TwoSortings {
                 swap(arr, j, pos);
             }
         }
+    }
+
+    static void sortInserts(int[] arr) {
+        int[] tmpArr = new int[arr.length];
+        tmpArr[0] = arr[0];
+        for (int i = 1; i < arr.length; i++) {
+            int pos = -1;
+            for (int j = 0; j < i; j++) {
+                if (tmpArr[j] > arr[i]) {
+                    pos = j;
+                    break;
+                }
+            }
+            if (pos > -1) {
+                shift(tmpArr, i, pos);
+                tmpArr[pos] = arr[i];
+            } else {
+                tmpArr[i] = arr[i];
+            }
+        }
+        for (int i = 0; i < arr.length; i++) {
+            arr[i] = tmpArr[i];
+        }
+    }
+
+    static void shift(int[] arr, int size, int pos) {
+        if (pos >= size) {
+            throw new IllegalArgumentException("pos must be less than size");
+        }
+        for (int i = size; i > pos; i--) {
+            arr[i] = arr[i - 1];
+        }
+    }
+
+    static int[] merge(int[] arrA, int[] arrB) {
+        int[] arr = new int[arrA.length + arrB.length];
+        int posA = 0;
+        int posB = 0;
+        for (int i = 0; i < arr.length; i++) {
+            if (posA == arrA.length) {
+                arr[i] = arrA[posB++];
+                continue;
+            }
+            if (posB == arrB.length) {
+                arr[i] = arrA[posA++];
+                continue;
+            }
+            if (arrA[posA] < arrB[posB]) {
+                arr[i] = arrA[posA++];
+            } else {
+                arr[i] = arrB[posB++];
+            }
+        }
+        return arr;
     }
 }
