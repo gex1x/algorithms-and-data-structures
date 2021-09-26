@@ -10,7 +10,7 @@ public class TwoSortings {
         final Random random = new Random();
 
         int arrSize = 10;
-        int[] arr = new int[] {1,1,1,2,1};
+        int[] arr = new int[] {9,8,7,6,5,4,3,2,1,0};
 /*
         int[] arr = new int[arrSize];
         for (int i = 0; i < arrSize; i++) {
@@ -19,7 +19,8 @@ public class TwoSortings {
 */
 
         output(arr);
-        sortChoice(arr);
+//        sortChoice(arr);
+        sortBubble1(arr);
         output(arr);
     }
 
@@ -31,7 +32,17 @@ public class TwoSortings {
         System.out.println("------------------------------");
     }
 
-    static void sortBubble(int[] arr) {
+    static void sortBubble1(int[] arr) {
+        for (int j = 0; j < arr.length - 2; j++) {
+            for (int i = 0; i < arr.length - 1 - j; i++) {
+                if (arr[i] > arr[i + 1]) {
+                    swap(arr, i, i + 1);
+                }
+            }
+        }
+    }
+
+    static void sortBubble2(int[] arr) {
         for (int j = 0; ; j++) {
             boolean sorted = true;
             for (int i = 0; i < arr.length - 1; i++) {
