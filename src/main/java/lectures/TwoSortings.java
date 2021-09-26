@@ -11,6 +11,8 @@ public class TwoSortings {
 
         int arrSize = 10;
         int[] arr = new int[] {9,8,7,6,5,4,3,2,1,0};
+        int[] arr1 = new int[] {1,2,6};
+        int[] arr2 = new int[] {3,4,9};
 /*
         int[] arr = new int[arrSize];
         for (int i = 0; i < arrSize; i++) {
@@ -21,8 +23,12 @@ public class TwoSortings {
         output(arr);
 //        sortChoice(arr);
 //        sortBubble1(arr);
-        sortInserts(arr);
+//        sortInserts(arr);
+        sortMerge2(arr);
 
+//        output(arr1);
+//        output(arr2);
+//        output(merge(arr1, arr2));
         output(arr);
     }
 
@@ -114,13 +120,13 @@ public class TwoSortings {
         }
     }
 
-    static int[] merge(int[] arrA, int[] arrB) {
+    static int[] merge1(int[] arrA, int[] arrB) {
         int[] arr = new int[arrA.length + arrB.length];
         int posA = 0;
         int posB = 0;
         for (int i = 0; i < arr.length; i++) {
             if (posA == arrA.length) {
-                arr[i] = arrA[posB++];
+                arr[i] = arrB[posB++];
                 continue;
             }
             if (posB == arrB.length) {
@@ -134,5 +140,61 @@ public class TwoSortings {
             }
         }
         return arr;
+    }
+
+    static void merge2(int[] arr, int[] tmpArr, int a, int m, int b) {
+        int posA = a;
+        int posB = m;
+        for (int i = a; i < b; i++) {
+            if (posA == m) {
+                tmpArr[i] = arr[posB++];
+                continue;
+            }
+            if (posB == b) {
+                tmpArr[i] = arr[posA++];
+                continue;
+            }
+            if (arr[posA] < arr[posB]) {
+                tmpArr[i] = arr[posA++];
+            } else {
+                tmpArr[i] = arr[posB++];
+            }
+        }
+        for (int i = a; i < b; i++) {
+            arr[i] = tmpArr[i];
+        }
+    }
+
+    static int[] sortMerge1(int[] arr) {
+        if (arr.length <= 1) {
+            return arr;
+        }
+        int sizeL = arr.length / 2;
+        int sizeR = arr.length - arr.length / 2;
+        int[] arrL = new int[sizeL];
+        int[] arrR = new int[sizeR];
+        for (int i = 0; i < sizeL; i++) {
+            arrL[i] = arr[i];
+        }
+        for (int i = 0; i < sizeR; i++) {
+            arrR[i] = arr[i + sizeL];
+        }
+        arrL = sortMerge1(arrL);
+        arrR = sortMerge1(arrR);
+        return merge1(arrL, arrR);
+    }
+
+    static void sortMerge2(int[] arr) {
+        int[] tmpArr = new int[arr.length];
+        sortMerge2(arr, tmpArr, 0, arr.length);
+    }
+
+    static void sortMerge2(int[] arr, int[] tmpArr, int a, int b) {
+        if (b - a <= 1) {
+            return;
+        }
+        sortMerge2(arr, tmpArr, a, (a + b) / 2);
+        sortMerge2(arr, tmpArr, (a + b) / 2, b);
+        merge2(arr, tmpArr, a, (a + b) / 2, b);
     }
 }
