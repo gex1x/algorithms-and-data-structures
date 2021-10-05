@@ -5,14 +5,16 @@ public class ThreeSortings {
     public static void main(String[] args) {
         System.out.println("------------------------------");
 
-//        int[] arr = new int[] {1,1,1,1,1};
-        int[] arr = new int[] {9,8,7,6,5,4,3,2,1,0};
+        int[] arr = new int[] {1,1,1,1,1};
+//        int[] arr = new int[] {9,8,7,6,5,4,3,2,1,0};
 //        int[] arr = new int[] {7,3,1,2,5,4,6};
 
         TwoSortings.output(arr);
 
 //        qsort1(arr, 0, arr.length);
-        qsort2(arr, 0, arr.length);
+//        qsort2(arr, 0, arr.length);
+
+        sortQuick3(arr, 0, arr.length - 1);
 
         TwoSortings.output(arr);
 
@@ -97,5 +99,43 @@ public class ThreeSortings {
             i++;
         }
         qsort2(arr, i, b);
+    }
+
+    static void sortQuick3(int[] arr, int a, int b) {
+        if (a < b) {
+            int loc = partition(arr, a, b);
+            sortQuick3(arr, a, loc - 1);
+            sortQuick3(arr, loc + 1, b);
+        }
+    }
+
+    static int partition(int[] arr, int begin, int end) {
+        int left, right, loc;
+        loc = left = begin;
+        right = end;
+        boolean flag = true;
+        while (flag) {
+            while (arr[loc] <= arr[right] && loc < right) {
+                right--;
+            }
+            if (loc == right) {
+                flag = false;
+            } else if (arr[loc] > arr[right]) {
+                TwoSortings.swap(arr, loc, right);
+                loc = right;
+            }
+            if (flag) {
+                while (arr[left] <= arr[loc] && left > loc) {
+                    left++;
+                }
+                if (left == loc) {
+                    flag = false;
+                } else if (arr[left] > arr[loc]) {
+                    TwoSortings.swap(arr, left, loc);
+                    loc = left;
+                }
+            }
+        }
+        return loc;
     }
 }
