@@ -37,7 +37,7 @@ public class TwoSortings {
             System.out.print(arr[i] + " ");
         }
         System.out.println();
-        System.out.println("------------------------------");
+//        System.out.println("------------------------------");
     }
 
     static void sortBubble1(int[] arr) {
